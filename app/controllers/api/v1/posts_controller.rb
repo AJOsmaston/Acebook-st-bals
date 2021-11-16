@@ -64,6 +64,3 @@ class Api::V1::PostsController < ApplicationController
       params.require(:post).permit(:message, :likes_count, pictures: [])
     end
 end
-
-
-end
