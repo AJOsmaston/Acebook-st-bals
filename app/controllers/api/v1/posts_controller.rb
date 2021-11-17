@@ -5,7 +5,9 @@ class Api::V1::PostsController < ApplicationController
   # GET /posts.json
 
   def index
-    @posts = Post.all.reverse
+    @posts = Post.all
+
+    render json: @posts
   end
 
   # GET /posts/1
@@ -31,7 +33,6 @@ class Api::V1::PostsController < ApplicationController
   # POST /post.json
   def create
     @post = Post.new(post_params)
-
 
     if @post.save
       render json: @post
