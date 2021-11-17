@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.5'
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1', '>= 3.1.16'
 gem 'htmlbeautifier', '~> 1.3', '>= 1.3.1'
+gem 'rack-cors'
 gem 'rufo'
 
 # Use Capistrano for deployment
