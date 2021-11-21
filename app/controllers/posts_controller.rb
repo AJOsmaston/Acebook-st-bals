@@ -3,8 +3,10 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
-    @posts = Post.all
+    # @posts = Post.all
     @post = Post.new
+    comments = params.fetch(:comments, nil)
+    @posts = Post.with_comments(comments).all
   end
 
   # GET /posts/1 or /posts/1.json
@@ -24,7 +26,7 @@ class PostsController < ApplicationController
   def create
     @post = Post.new(post_params)
     @post.user_id = session[:user_id]
-
+   
     respond_to do |format|
       if @post.save
         format.html { redirect_to root_path, notice: 'Post was successfully created.' }
@@ -67,6 +69,6 @@ class PostsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:message, :likes_count, pictures: [])
+    params.require(:post).permit(:message, :likes_count, :video_url, pictures: [])
   end
 end

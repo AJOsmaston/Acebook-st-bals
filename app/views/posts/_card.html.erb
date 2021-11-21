@@ -1,0 +1,61 @@
+<% @posts.reverse.each do |post| %>
+  <div class="card mb-3 shadow p-3 mb-5 bg-body rounded">
+    <div class="row g-0">
+      <div class="col-md-3 d-flex flex-column text-center align-items-center my-5 justify-content-center">  
+        <% # Aside profile %>
+        <%= image_tag post.user.display_profile_photo, class: "post_avatar", style: "height:5em;width:5em" %>
+          <div class="mt-2">
+            <p style="font-size: 15px; margin-bottom: 0;">Posted by <%= post.user.first_name %> <%= post.user.last_name %></p>
+            <small class="text-muted" style="font-size: 10px;">Posted <%= time_ago_in_words(post.created_at) %> ago.</small>
+            <%= render "card-footer", post: post %>
+          </div>
+      </div>
+      <div class="col-md-9 align-items-center">
+        <div class="card-body d-flex flex-fill flex-column align-items-stretch">
+        <% # Attached Picture %>
+        <div class="my-2">
+          <% unless post.pictures.empty? %>
+            <%= render "images", post: post %>
+          <% end %>
+          </div>
+
+            <% # Video embed %>
+
+          <% unless post.video_url.blank? %>
+          <div class="d-flex justify-content-center">
+            <iframe max-width="80%" height="auto" src="<%= video_embed(post.video_url) %>" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <% end %>
+
+        <% # Post message %>
+          <p class="card-title my-3 ms-3">
+            <% if post.message.length < 280 %>
+              <%= post.message %>
+            <% else %>
+              <%= truncate(post.message, length: 280) %>
+              <a class="text-primary" data-bs-toggle="modal" data-bs-target="#postModal_<%= post.id %>">Continue reading</a>
+               <div class="modal fade" id="postModal_<%= post.id %>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">Posted by <%= post.user.first_name %> <%= post.user.last_name %></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <%= post.message %>
+                    </div>
+                    <div class="modal-footer">
+                      <%= render "card-footer", post: post %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% end %>
+          </p>
+   
+          <%= render "comments", post: post, class: "d-flex align-self-stretch" %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
