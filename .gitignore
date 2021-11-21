@@ -26,5 +26,4 @@
 /storage/
 
 coverage
-
-.vscode
+coverage/.resultset.json.lock
