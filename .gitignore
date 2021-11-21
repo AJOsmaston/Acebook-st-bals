@@ -26,3 +26,4 @@
 /storage/
 
 coverage
+coverage/.resultset.json.lock
